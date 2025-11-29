@@ -8,9 +8,3 @@ declare module "*.module.css" {
   const classes: { [key: string]: string };
   export default classes;
 }
-
-// For side-effect imports of CSS files
-declare module "*.css" {
-  const content: any;
-  export = content;
-}

@@ -1,12 +1,19 @@
+export type Gender = "male" | "female" | "other";
+
 export interface LoginRequest {
-  email: string;
+  username: string;
   password?: string;
 }
 
 export interface RegisterRequest {
-  name: string;
+  username: string;
+  fullName: string;
   email: string;
   password?: string;
+  address: string;
+  dateOfBirth: string;
+  gender: Gender;
+  phone: string;
 }
 
 export interface OAuthRequest {

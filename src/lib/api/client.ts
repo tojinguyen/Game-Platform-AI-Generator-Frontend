@@ -3,7 +3,7 @@
  * Provides a centralized HTTP client with common configurations
  */
 
-import axios, { AxiosInstance, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
 import { config } from '@/config';
 
 export class ApiClient {
@@ -57,31 +57,31 @@ export class ApiClient {
   }
 
   // GET request
-  async get<T>(url: string, config?: any) {
+  async get<T>(url: string, config?: AxiosRequestConfig) {
     const response = await this.client.get<T>(url, config);
     return response.data;
   }
 
   // POST request
-  async post<T>(url: string, data?: any, config?: any) {
+  async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
     const response = await this.client.post<T>(url, data, config);
     return response.data;
   }
 
   // PUT request
-  async put<T>(url: string, data?: any, config?: any) {
+  async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
     const response = await this.client.put<T>(url, data, config);
     return response.data;
   }
 
   // DELETE request
-  async delete<T>(url: string, config?: any) {
+  async delete<T>(url: string, config?: AxiosRequestConfig) {
     const response = await this.client.delete<T>(url, config);
     return response.data;
   }
 
   // PATCH request
-  async patch<T>(url: string, data?: any, config?: any) {
+  async patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig) {
     const response = await this.client.patch<T>(url, data, config);
     return response.data;
   }

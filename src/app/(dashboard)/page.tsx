@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
@@ -42,7 +41,7 @@ const mockProjects = [
 ];
 
 export default function Home() {
-  const { user, isLoggedIn, isLoading, isClient, logout } = useAuth();
+  const { user, isLoggedIn, isLoading, isClient } = useAuth();
   const router = useRouter();
 
   // Calculate stats
@@ -147,7 +146,7 @@ export default function Home() {
               Welcome back, {user?.name || "User"}!
             </h2>
             <p className="text-galaxy-silver">
-              Ready to create your next amazing game? Let's get started with our AI-powered tools.
+              Ready to create your next amazing game? Let&apos;s get started with our AI-powered tools.
             </p>
           </div>
 

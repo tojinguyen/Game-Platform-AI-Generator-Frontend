@@ -14,7 +14,7 @@ import { ROUTES } from "@/constants";
 import { config } from "@/config";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +33,13 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      const data = await login({ email, password });
+      const data = await login({ username, password });
       console.log("Login successful", data);
       
       // Mock user data - in real app, get from API response
       const userData = {
-        name: email.split('@')[0],
-        email: email,
+        name: username,
+        email: `${username}@example.com`,
         avatar: config.defaults.avatar
       };
       
@@ -113,23 +113,23 @@ export default function LoginPage() {
 
   return (
     <GalaxyBackground>
-      <div className="flex items-center justify-center min-h-screen relative">
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
         <GalaxyDecorations />
-        <div className="w-full max-w-md p-8 space-y-6 bg-galaxy-primary/80 backdrop-blur-md rounded-lg shadow-galaxy galaxy-border relative z-10">
+        <div className="w-full max-w-md p-6 space-y-4 bg-galaxy-primary/80 backdrop-blur-md rounded-lg shadow-galaxy galaxy-border relative z-10">
           <h1 className="text-2xl font-bold text-center galaxy-text">
             Login
           </h1>
           {error && <p className="text-galaxy-pink text-sm text-center">{error}</p>}
-          <form className="space-y-6" onSubmit={handleLogin}>
+          <form className="space-y-4" onSubmit={handleLogin}>
             <FormInput
-              id="email"
-              name="email"
-              type="email"
-              label="Email address"
-              autoComplete="email"
+              id="username"
+              name="username"
+              type="text"
+              label="Username"
+              autoComplete="username"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <FormInput
               id="password"
