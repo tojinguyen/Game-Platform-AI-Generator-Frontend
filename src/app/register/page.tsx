@@ -13,7 +13,6 @@ import { ROUTES } from "@/constants";
 import { Gender } from "@/lib/types";
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +37,6 @@ export default function RegisterPage() {
 
     try {
       await register({
-        username,
         fullName,
         email,
         password,
@@ -69,16 +67,6 @@ export default function RegisterPage() {
             <p className="text-galaxy-pink text-sm text-center">{error}</p>
           )}
           <form className="space-y-4" onSubmit={handleRegister}>
-            <FormInput
-              id="username"
-              name="username"
-              type="text"
-              label="Username"
-              autoComplete="username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
             <FormInput
               id="fullName"
               name="fullName"

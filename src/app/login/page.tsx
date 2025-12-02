@@ -12,9 +12,10 @@ import FormInput from "@/components/ui/FormInput";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants";
 import { config } from "@/config";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +34,14 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      const data = await login({ username, password });
+      const data = await login({ email, password });
       console.log("Login successful", data);
       
-      // Mock user data - in real app, get from API response
+      const decodedToken: { sub: string; name: string } = jwtDecode(data.accessToken);
+
       const userData = {
-        name: username,
-        email: `${username}@example.com`,
+        name: decodedToken.name,
+        email: decodedToken.sub,
         avatar: config.defaults.avatar
       };
       
@@ -67,11 +69,12 @@ export default function LoginPage() {
         const data = await googleOAuth({ token: credentialResponse.credential });
         console.log("Google login successful", data);
 
-        // Mock user data - in real app, get from API response
+        const decodedToken: { sub: string; name: string; picture: string } = jwtDecode(data.accessToken);
+
         const userData = {
-          name: "Google User",
-          email: "user@gmail.com",
-          avatar: config.defaults.avatar,
+          name: decodedToken.name,
+          email: decodedToken.sub,
+          avatar: decodedToken.picture || config.defaults.avatar,
         };
 
         authLogin(userData, {
@@ -113,7 +116,7 @@ export default function LoginPage() {
 
   return (
     <GalaxyBackground>
-      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative">
         <GalaxyDecorations />
         <div className="w-full max-w-md p-6 space-y-4 bg-galaxy-primary/80 backdrop-blur-md rounded-lg shadow-galaxy galaxy-border relative z-10">
           <h1 className="text-2xl font-bold text-center galaxy-text">
@@ -122,14 +125,14 @@ export default function LoginPage() {
           {error && <p className="text-galaxy-pink text-sm text-center">{error}</p>}
           <form className="space-y-4" onSubmit={handleLogin}>
             <FormInput
-              id="username"
-              name="username"
-              type="text"
-              label="Username"
-              autoComplete="username"
+              id="email"
+              name="email"
+              type="email"
+              label="Email"
+              autoComplete="email"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <FormInput
               id="password"
